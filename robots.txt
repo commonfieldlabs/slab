@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://commonfieldlabs.github.io/slab/sitemap.xml
