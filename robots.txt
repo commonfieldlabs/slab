@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://commonfieldlabs.github.io/slab/sitemap.xml
+Sitemap: https://slabpermits.com/sitemap.xml
