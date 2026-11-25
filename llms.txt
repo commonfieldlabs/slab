@@ -1,0 +1,62 @@
+# SLAB: new home permits, Austin TX
+
+> Weekly list of every new house that got a building permit in Austin, Texas (2,274 in the last 12 months), for companies that sell to new homeowners. Built from City of Austin open data (Issued Construction Permits, 3syk-w9eu), deduplicated and mapped. Each record: street address, ZIP, square footage, builder, permit date, estimated move-in month (permit + 7 months). Prices: $49/month for chosen ZIP codes, delivered Fridays; $750 one-time Territory Report (12 months of one service area). Published by Commonfield Labs.
+
+Public pages show street and ZIP only; full addresses go to subscribers. No homeowner names, phone numbers or emails are included.
+
+## Start here
+- [What subscribers get](https://slabpermits.com/what-you-get.html): the offer, sample rows, pricing and FAQ
+- [New homeowner leads in Austin](https://slabpermits.com/new-homeowner-leads-austin.html): who uses it and why permits beat new mover lists
+- [Latest weekly issue](https://slabpermits.com/): this week's new homes, mapped
+- [12 months of new construction permits](https://slabpermits.com/austin-new-construction-permits.html): monthly totals, busiest ZIPs, top builders
+
+## By trade
+- [Pool builders](https://slabpermits.com/pool-leads-austin.html)
+- [Solar](https://slabpermits.com/solar-leads-austin.html)
+- [Landscaping](https://slabpermits.com/landscaping-leads-austin.html)
+- [Fence](https://slabpermits.com/fence-leads-austin.html)
+- [Security](https://slabpermits.com/security-leads-austin.html)
+- [Blinds & shutters](https://slabpermits.com/blinds-leads-austin.html)
+- [Gutters](https://slabpermits.com/gutters-leads-austin.html)
+- [Water treatment](https://slabpermits.com/water-treatment-leads-austin.html)
+- [Pest control](https://slabpermits.com/pest-control-leads-austin.html)
+- [Movers](https://slabpermits.com/movers-leads-austin.html)
+- [Home insurance](https://slabpermits.com/insurance-leads-austin.html)
+- [Garage](https://slabpermits.com/garage-leads-austin.html)
+- [Cleaning](https://slabpermits.com/cleaning-leads-austin.html)
+
+## By ZIP code
+- [78617](https://slabpermits.com/zip-78617.html)
+- [78652](https://slabpermits.com/zip-78652.html)
+- [78653](https://slabpermits.com/zip-78653.html)
+- [78702](https://slabpermits.com/zip-78702.html)
+- [78703](https://slabpermits.com/zip-78703.html)
+- [78704](https://slabpermits.com/zip-78704.html)
+- [78705](https://slabpermits.com/zip-78705.html)
+- [78721](https://slabpermits.com/zip-78721.html)
+- [78722](https://slabpermits.com/zip-78722.html)
+- [78723](https://slabpermits.com/zip-78723.html)
+- [78724](https://slabpermits.com/zip-78724.html)
+- [78729](https://slabpermits.com/zip-78729.html)
+- [78730](https://slabpermits.com/zip-78730.html)
+- [78731](https://slabpermits.com/zip-78731.html)
+- [78732](https://slabpermits.com/zip-78732.html)
+- [78736](https://slabpermits.com/zip-78736.html)
+- [78741](https://slabpermits.com/zip-78741.html)
+- [78744](https://slabpermits.com/zip-78744.html)
+- [78745](https://slabpermits.com/zip-78745.html)
+- [78746](https://slabpermits.com/zip-78746.html)
+- [78747](https://slabpermits.com/zip-78747.html)
+- [78748](https://slabpermits.com/zip-78748.html)
+- [78750](https://slabpermits.com/zip-78750.html)
+- [78751](https://slabpermits.com/zip-78751.html)
+- [78752](https://slabpermits.com/zip-78752.html)
+- [78753](https://slabpermits.com/zip-78753.html)
+- [78754](https://slabpermits.com/zip-78754.html)
+- [78756](https://slabpermits.com/zip-78756.html)
+- [78757](https://slabpermits.com/zip-78757.html)
+- [78758](https://slabpermits.com/zip-78758.html)
+- [78759](https://slabpermits.com/zip-78759.html)
+
+## Builders
+- [Austin builders ranked by new home permits](https://slabpermits.com/builders.html)

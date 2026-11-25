@@ -1,4 +1,5 @@
 User-agent: *
+# AI and search crawlers welcome (GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended, Bingbot).
 Allow: /
 Disallow: /src/
 Sitemap: https://slabpermits.com/sitemap.xml

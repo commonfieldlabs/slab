@@ -1,7 +1,7 @@
 {
   "_readme": "All sales copy on slabpermits.com lives here. build_site.py reads it. Change copy here (not in code), log every change in growth/changes.md with date, page, before/after and the metric that prompted it. Page overrides: pages.<file>.title / description / intro (HTML inserted right after the page header). Trade overrides: cta_by_prefix.<file prefix>.",
   "strip": {
-    "who": "For pool, solar, landscaping and fence companies in Austin.",
+    "who": "For Austin companies that sell to new homeowners: pools, solar, landscaping, fencing, security, blinds, gutters, movers and more.",
     "what": "Every Friday: the new homes permitted in your ZIP codes, with address, size, builder and estimated move-in. Reach the owner months before they move in, before your competitors know the house exists.",
     "link": "See exactly what you get"
   },

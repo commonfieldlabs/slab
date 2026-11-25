@@ -86,7 +86,7 @@ def page(path, title, desc, body, depth, ld=""):
 <title>{e(title)}</title><meta name="description" content="{e(desc)}"><link rel="canonical" href="{BASE}/{path}">
 <meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:image" content="{BASE}/img-latest.png">
 {FONTS}<style>{CSS}</style>{ld}</head><body><main class="sheet">
-<nav><a class="mark" href="index.html">SLAB<span>NEW HOMES, WEEKLY</span></a><a href="index.html">Latest</a><a href="archive.html">Archive</a><a href="zips.html">By ZIP</a><a href="austin-new-construction-permits.html">12 months</a><a href="builders.html">Builders</a><a href="what-you-get.html">Subscribe</a></nav>
+<nav><a class="mark" href="index.html">SLAB<span>NEW HOMES, WEEKLY</span></a><a href="index.html">Latest</a><a href="archive.html">Archive</a><a href="zips.html">By ZIP</a><a href="austin-new-construction-permits.html">12 months</a><a href="builders.html">Builders</a><a href="new-homeowner-leads-austin.html">Who it's for</a><a href="what-you-get.html">Subscribe</a></nav>
 {strip}
 {body}
 <section class="cta"><b>{e(cta["headline"])}</b>
@@ -99,6 +99,24 @@ SLAB is published by Commonfield Labs.</p></main></body></html>"""
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(doc, encoding="utf-8")
     return path
+
+
+FAQ = [
+    ("What is SLAB?", "SLAB is a weekly list of every new house that got a building permit in Austin, TX, for companies that sell to new homeowners: pools, solar, landscaping, fencing, security, window coverings, gutters, water treatment, pest control, movers, cleaning and home insurance."),
+    ("Where does the data come from?", "From the City of Austin's open data portal (Issued Construction Permits, dataset 3syk-w9eu). SLAB keeps new single-family and duplex building permits, removes duplicates and maps each home using the city's address points."),
+    ("How early do I hear about a new home?", "The building permit is the first public record of a new house. Families typically move in about 7 months after the permit is issued, so SLAB gives you months of lead time. Move-in month is an estimate (permit date + 7 months)."),
+    ("How is this different from a new mover list?", "New mover lists come out after people move in, when every other company is already mailing them. SLAB starts at the permit, months before move-in."),
+    ("What does it cost?", "$49 a month for every new home in the ZIP codes you serve, delivered every Friday. Or a one-time Territory Report for $750: 12 months of new homes in your service area, mapped and ranked, with builders and a move-in calendar."),
+    ("What's in each record?", "Street address, ZIP code, square footage, builder, permit date, estimated move-in month and a link to the city's permit record. No homeowner names, phone numbers or emails."),
+    ("What area does it cover?", "Permits issued by the City of Austin, Texas. Surrounding cities with their own permit offices are not included yet."),
+]
+
+
+def faq_block(items=FAQ):
+    vis = "<section><h2>Questions</h2>" + "".join(f"<p class='body'><b>{e(q)}</b><br>{e(a)}</p><br>" for q, a in items) + "</section>"
+    ld = '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in items]}) + "</script>"
+    return vis, ld
 
 
 def homes_table(rows, show_zip=True):
@@ -277,7 +295,7 @@ pages.append(page("austin-new-construction-permits.html", f"Austin new construct
                   f"<section><h2>Busiest ZIP codes</h2>{zip_chips(zc_all, 30)}</section>"
                   f"<section><h2>Top builders</h2>{builders_table([r for r in year if r['builder'] != 'Owner-builder'], 12)}<p><a href='builders.html'>All builders →</a></p></section>"
                   f"<section><h2>Biggest new homes</h2>{big_table(year, 12)}</section>"
-                  "<section><h2>For your trade</h2><div class='zips'><a href='pool-leads-austin.html'>Pool builders</a><a href='solar-leads-austin.html'>Solar</a><a href='landscaping-leads-austin.html'>Landscaping</a><a href='fence-leads-austin.html'>Fence</a></div></section>", 0, ld))
+                  "<section><h2>For your trade</h2>@@TRADECHIPS@@</section>", 0, ld))
 
 # Trade landing pages: the searches buyers actually type ("pool leads austin").
 TRADES = [
@@ -293,7 +311,40 @@ TRADES = [
     ("fence", "Fence company leads in Austin: new home permits", "fence companies",
      "When one builder pulls many permits on one street, many yards need fences at about the same time, often to the same spec.",
      lambda r: True, "All new homes"),
+    ("security", "Home security leads in Austin: new homes before move-in", "home security and smart-home installers",
+     "A new house comes with no alarm contract and no cameras. The owner picks a provider around move-in, and the permit is public about 7 months earlier.",
+     lambda r: True, "All new homes"),
+    ("blinds", "Window covering leads in Austin: blinds and shutters for new homes", "blinds, shades and shutter companies",
+     "Most new builds hand over bare windows, so every new home is a whole-house window-covering job, and the biggest houses have the most windows.",
+     lambda r: True, "All new homes"),
+    ("gutters", "Gutter leads in Austin: new home permits", "gutter installers",
+     "Many new homes are handed over without full gutters, and owners add them after the first heavy rain. Streets where one builder is putting up many houses let one crew quote several neighbors at once.",
+     lambda r: True, "All new homes"),
+    ("water-treatment", "Water softener and filtration leads in Austin: new homes", "water treatment companies",
+     "Builders rarely include a softener or whole-house filter, so the new owner decides in the first months. The permit tells you which houses, and the move-in month tells you when.",
+     lambda r: True, "All new homes"),
+    ("pest-control", "Pest control leads in Austin: new home permits", "pest control companies",
+     "Every new house needs its first pest and termite plan, and owners set up recurring service soon after moving in. Whole new streets fill up at once, which makes for tight routes.",
+     lambda r: True, "All new homes"),
+    ("movers", "Moving company leads in Austin: who moves in when", "moving companies",
+     "Each permit is a household that moves in about 7 months later. The estimated move-in month tells you when to reach them.",
+     lambda r: True, "All new homes"),
+    ("insurance", "Home insurance leads in Austin: new construction", "home insurance agencies",
+     "Lenders require a homeowners policy at closing. The permit shows the house, its size and its builder months before that.",
+     lambda r: True, "All new homes"),
+    ("garage", "Garage door, storage and floor leads in Austin: new homes", "garage storage, floor coating and door companies",
+     "New garages come bare: no storage, no coated floor, a basic opener. The biggest houses have the biggest garages.",
+     lambda r: True, "All new homes"),
+    ("cleaning", "Move-in cleaning leads in Austin: new home permits", "cleaning companies",
+     "New construction needs a post-build clean before move-in, and many families keep a regular cleaner afterwards. The move-in month is your timing.",
+     lambda r: True, "All new homes"),
 ]
+TRADE_NAMES = {"pool": "Pool builders", "solar": "Solar", "landscaping": "Landscaping", "fence": "Fence", "security": "Security",
+               "blinds": "Blinds & shutters", "gutters": "Gutters", "water-treatment": "Water treatment", "pest-control": "Pest control",
+               "movers": "Movers", "insurance": "Home insurance", "garage": "Garage", "cleaning": "Cleaning"}
+TRADE_CHIPS = "<div class='zips'>" + "".join(f"<a href='{k}-leads-austin.html'>{e(n)}</a>" for k, n in TRADE_NAMES.items()) + "</div>"
+_hub = OUT / "austin-new-construction-permits.html"
+_hub.write_text(_hub.read_text(encoding="utf-8").replace("@@TRADECHIPS@@", TRADE_CHIPS), encoding="utf-8")
 for key, h, who, why, keep, label in TRADES:
     rows = [r for r in year if keep(r)]
     zc = collections.Counter(r["zip"] for r in rows)
@@ -310,7 +361,20 @@ for key, h, who, why, keep, label in TRADES:
             + (f"<section><h2>Biggest of them</h2>{big_table(rows, 12)}</section>" if key == "pool" else "")
             + "<section><h2>How SLAB works</h2><p class='body'>Every Friday SLAB pulls the City of Austin's newly issued building permits, keeps the new single-family homes, removes duplicates and maps them. "
               "Subscribers get the map plus a spreadsheet for their ZIP codes: street address, size, builder and estimated move-in month. That's enough to plan mailers, door hangers or a builder pitch before the house is finished.</p></section>")
-    pages.append(page(f"{key}-leads-austin.html", f"{h} | SLAB", f"{len(rows):,} new Austin homes in 12 months for {who}: by ZIP, with builders, sizes and move-in timing. Weekly list from City of Austin permits, $49/mo.", body, 0))
+    fv, fl = faq_block(FAQ[1:5])
+    body += "<section><h2>Other trades</h2>" + TRADE_CHIPS + "</section>" + fv
+    pages.append(page(f"{key}-leads-austin.html", f"{h} | SLAB", f"{len(rows):,} new Austin homes in 12 months for {who}: by ZIP, with builders, sizes and move-in timing. Weekly list from City of Austin permits, $49/mo.", body, 0, fl))
+
+# Hub for everyone who sells to new homeowners ("new homeowner leads austin", "new mover list austin").
+fv, fl = faq_block()
+pages.append(page("new-homeowner-leads-austin.html", "New homeowner leads in Austin, TX, before move-in | SLAB",
+                  f"Every new house permitted in Austin, weekly: {len(year):,} in the last 12 months. For companies that sell to new homeowners. Street, ZIP, size, builder and move-in month. $49/mo.",
+                  f"<header><h1>Austin new homeowner leads, <em>months before move-in.</em></h1>"
+                  f"<p class='lede'>{len(year):,} new homes got building permits in Austin in the last 12 months. Each one is a household that will need a long list of services within about 7 months.</p></header>"
+                  "<section><h2>Who uses SLAB</h2>" + TRADE_CHIPS + "</section>"
+                  "<section><h2>Why the permit beats a new mover list</h2><p class='body'>New mover lists arrive after the family moves in, when every competitor's mailer lands the same week. "
+                  "The building permit is the first public record of a new house, months earlier. SLAB pulls those permits from the City of Austin every week and hands you the ones in your ZIP codes, with the estimated move-in month so you know when to reach out.</p></section>"
+                  f"<section><h2>Where the new homes are, {span}</h2>{zip_chips(collections.Counter(r['zip'] for r in year), 30)}</section>" + fv, 0, fl))
 
 
 # ---------- What you get (the plain-language pitch page) ----------
@@ -336,12 +400,33 @@ pages.append(page("what-you-get.html", "SLAB: weekly new-home leads for Austin p
                   "<li>Plan door-hanger and sales routes around the streets filling up next.</li></ul></section>"
                   "<section><h2>The two options</h2><ul class='steps'>"
                   "<li><b>Weekly list · $49/mo</b>Every Friday, your ZIP codes. Cancel anytime. Enter your ZIP codes at checkout.</li>"
-                  "<li><b>Territory Report · $750</b>One-time: 12 months of new homes in your service area, mapped and ranked by growth and house size, plus the builder list and a move-in calendar.</li></ul></section>", 0))
+                  "<li><b>Territory Report · $750</b>One-time: 12 months of new homes in your service area, mapped and ranked by growth and house size, plus the builder list and a move-in calendar.</li></ul></section>"
+                  + faq_block()[0], 0, faq_block()[1] + '<script type="application/ld+json">' + json.dumps({
+                      "@context": "https://schema.org", "@type": "Product", "name": "SLAB weekly new-home permit list, Austin TX",
+                      "description": "Every new single-family home permitted by the City of Austin, delivered weekly for the ZIP codes you choose: street address, size, builder, permit date and estimated move-in month.",
+                      "brand": {"@type": "Organization", "name": "Commonfield Labs"},
+                      "offers": [{"@type": "Offer", "name": "Weekly list", "price": "49.00", "priceCurrency": "USD", "url": WEEKLY,
+                                  "priceSpecification": {"@type": "UnitPriceSpecification", "price": "49.00", "priceCurrency": "USD", "billingDuration": "P1M"}},
+                                 {"@type": "Offer", "name": "Territory Report (12 months, one service area)", "price": "750.00", "priceCurrency": "USD", "url": TERRITORY}]}) + "</script>"))
 
 (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
                                  + "".join(f"<url><loc>{BASE}/{p.replace('index.html', '')}</loc><lastmod>{datetime.date.today()}</lastmod></url>" for p in dict.fromkeys(pages)) + "</urlset>\n", encoding="utf-8")
-(OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /src/\nSitemap: {BASE}/sitemap.xml\n", encoding="utf-8")
+(OUT / "robots.txt").write_text(f"User-agent: *\n# AI and search crawlers welcome (GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended, Bingbot).\nAllow: /\nDisallow: /src/\nSitemap: {BASE}/sitemap.xml\n", encoding="utf-8")
 (OUT / ".nojekyll").write_text("", encoding="utf-8")
+llms = [f"# SLAB: new home permits, Austin TX", "",
+        f"> Weekly list of every new house that got a building permit in Austin, Texas ({len(year):,} in the last 12 months), for companies that sell to new homeowners. "
+        "Built from City of Austin open data (Issued Construction Permits, 3syk-w9eu), deduplicated and mapped. Each record: street address, ZIP, square footage, builder, permit date, estimated move-in month (permit + 7 months). "
+        "Prices: $49/month for chosen ZIP codes, delivered Fridays; $750 one-time Territory Report (12 months of one service area). Published by Commonfield Labs.", "",
+        "Public pages show street and ZIP only; full addresses go to subscribers. No homeowner names, phone numbers or emails are included.", "",
+        "## Start here",
+        f"- [What subscribers get]({BASE}/what-you-get.html): the offer, sample rows, pricing and FAQ",
+        f"- [New homeowner leads in Austin]({BASE}/new-homeowner-leads-austin.html): who uses it and why permits beat new mover lists",
+        f"- [Latest weekly issue]({BASE}/): this week's new homes, mapped",
+        f"- [12 months of new construction permits]({BASE}/austin-new-construction-permits.html): monthly totals, busiest ZIPs, top builders", "",
+        "## By trade"] + [f"- [{n}]({BASE}/{k}-leads-austin.html)" for k, n in TRADE_NAMES.items()] + ["",
+        "## By ZIP code"] + [f"- [{z}]({BASE}/zip-{z}.html)" for z in sorted(zip_pages)] + ["",
+        "## Builders", f"- [Austin builders ranked by new home permits]({BASE}/builders.html)"]
+(OUT / "llms.txt").write_text("\n".join(llms) + "\n", encoding="utf-8")
 # Search engine ownership/notification files (must survive every rebuild).
 (OUT / "googlecc75f6662eab9738.html").write_text("google-site-verification: googlecc75f6662eab9738.html", encoding="utf-8")
 (OUT / f"{INDEXNOW_KEY}.txt").write_text(INDEXNOW_KEY, encoding="utf-8")
