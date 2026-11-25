@@ -1,0 +1,56 @@
+# Weekly SLAB rebuild that runs on GitHub, so slabpermits.com stays fresh with the laptop off.
+# Inputs: src/ (street-only copy of the build inputs, refreshed by every local publish).
+# Steps: pull 12 months of City of Austin permits, rebuild the site, commit, request a Pages build, ping IndexNow.
+name: Weekly SLAB rebuild
+on:
+  schedule:
+    - cron: "0 14 * * 6"   # Saturdays 14:00 UTC (8am Mountain), after the Friday issue
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/rebuild.yml"]
+permissions:
+  contents: write
+  pages: write
+concurrency:
+  group: slab-rebuild
+  cancel-in-progress: false
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch 12 months of permits and build
+        env:
+          SLAB_DATA: ${{ github.workspace }}/src/data
+          SLAB_OUT: ${{ runner.temp }}/site
+        run: |
+          python -I src/fetch_year.py
+          python -I src/build_site.py
+          if grep -rl $'\xc3\x82\|\xc3\xa2\xe2\x82\xac' "$SLAB_OUT" --include=*.html; then echo "mojibake found"; exit 1; fi
+          test "$(ls "$SLAB_OUT"/*.html | wc -l)" -ge 20
+      - name: Replace site files and commit
+        run: |
+          find . -maxdepth 1 -type f ! -name CNAME -delete
+          cp -r "${{ runner.temp }}/site/." .
+          git config user.name "SLAB rebuild"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "No changes"; echo "CHANGED=0" >> "$GITHUB_ENV"; exit 0; fi
+          git commit -m "Weekly rebuild $(date -u +%F) (GitHub Actions)"
+          git push
+          echo "CHANGED=1" >> "$GITHUB_ENV"
+      - name: Request Pages build
+        if: env.CHANGED == '1'
+        run: |
+          curl -sS -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pages/builds" || true
+      - name: Ping IndexNow
+        if: env.CHANGED == '1'
+        env:
+          SLAB_OUT: ${{ runner.temp }}/site
+        run: python -I src/ping_indexnow.py
