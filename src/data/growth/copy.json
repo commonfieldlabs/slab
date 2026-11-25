@@ -1,0 +1,34 @@
+{
+  "_readme": "All sales copy on slabpermits.com lives here. build_site.py reads it. Change copy here (not in code), log every change in growth/changes.md with date, page, before/after and the metric that prompted it. Page overrides: pages.<file>.title / description / intro (HTML inserted right after the page header). Trade overrides: cta_by_prefix.<file prefix>.",
+  "strip": {
+    "who": "For pool, solar, landscaping and fence companies in Austin.",
+    "what": "Every Friday: the new homes permitted in your ZIP codes, with address, size, builder and estimated move-in. Reach the owner months before they move in, before your competitors know the house exists.",
+    "link": "See exactly what you get"
+  },
+  "cta": {
+    "headline": "Know about every new house in your ZIP codes 7 months before the family moves in.",
+    "sub": "Every Friday you get the map and a spreadsheet: full street address, square footage, builder and estimated move-in month for each new home in the ZIP codes you serve. Use it for mailers, door hangers, builder pitches or route planning. $49 a month, cancel anytime.",
+    "weekly_label": "Start weekly list · $49/mo",
+    "territory_label": "12-month Territory Report · $750",
+    "more_label": "What's in it?"
+  },
+  "cta_by_prefix": {
+    "pool-leads": {
+      "headline": "Reach the families building 3,500+ sq ft homes before the pool contract goes to someone else.",
+      "sub": "Every Friday: every big new house permitted in your ZIP codes, with address, size, builder and move-in month. One signed pool pays for years of SLAB. $49 a month, cancel anytime."
+    },
+    "solar-leads": {
+      "headline": "Every new roof in your ZIP codes, months before move-in.",
+      "sub": "Every Friday: each new home permitted in the ZIP codes you serve, with address, size, builder and move-in month. Get in front of the owner while they're still making decisions about the house. $49 a month, cancel anytime."
+    },
+    "landscaping-leads": {
+      "headline": "Every bare new yard in your ZIP codes, before the owner moves in.",
+      "sub": "Every Friday: new homes in your ZIP codes with address, size, builder and move-in month. Plan mailers and routes around the streets filling up next. $49 a month, cancel anytime."
+    },
+    "fence-leads": {
+      "headline": "Know which streets are about to need a dozen fences at once.",
+      "sub": "Every Friday: new homes in your ZIP codes with address, builder and move-in month, so you can pitch the builder or the whole street together. $49 a month, cancel anytime."
+    }
+  },
+  "pages": {}
+}

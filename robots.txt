@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+Disallow: /src/
 Sitemap: https://slabpermits.com/sitemap.xml
