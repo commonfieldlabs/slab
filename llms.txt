@@ -1,6 +1,6 @@
 # SLAB: new home permits, Austin TX
 
-> Weekly list of every new house that got a building permit in Austin, Texas (2,274 in the last 12 months), for companies that sell to new homeowners. Built from City of Austin open data (Issued Construction Permits, 3syk-w9eu), deduplicated and mapped. Each record: street address, ZIP, square footage, builder, permit date, estimated move-in month (permit + 7 months). Prices: $49/month for chosen ZIP codes, delivered Fridays; $750 one-time Territory Report (12 months of one service area). Published by Commonfield Labs.
+> Weekly list of every new house that got a building permit in Austin, Texas (2,265 in the last 12 months), for companies that sell to new homeowners. Built from City of Austin open data (Issued Construction Permits, 3syk-w9eu), deduplicated and mapped. Each record: street address, ZIP, square footage, builder, permit date, estimated move-in month (permit + 7 months). Prices: $49/month for chosen ZIP codes, delivered Fridays; $750 one-time Territory Report (12 months of one service area). Published by Commonfield Labs.
 
 Public pages show street and ZIP only; full addresses go to subscribers. No homeowner names, phone numbers or emails are included.
 
